@@ -1,12 +1,25 @@
 [gd_scene format=3 uid="uid://cxy050yrle583"]
 
+[ext_resource type="PackedScene" uid="uid://bm5u755mm7md4" path="res://scenes/Bread.tscn" id="1_uwrxv"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cncb8"]
-size = Vector2(1153, 24)
+size = Vector2(1153, 21)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_cncb8"]
+resource_name = "32"
+size = Vector2(1150, 24)
 
 [node name="Node2D" type="Node2D" unique_id=1565968776]
 
-[node name="Area2D" type="Area2D" parent="." unique_id=769812654]
+[node name="table" type="StaticBody2D" parent="." unique_id=1495238217]
+position = Vector2(576, 636)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1900405885]
-position = Vector2(575.5, 636)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="table" unique_id=1900405885]
+position = Vector2(-0.5, 0.5)
 shape = SubResource("RectangleShape2D_cncb8")
+
+[node name="Sprite2D" type="Sprite2D" parent="table" unique_id=2032321959]
+texture = SubResource("PlaceholderTexture2D_cncb8")
+
+[node name="Bread" parent="." unique_id=2128048116 instance=ExtResource("1_uwrxv")]
+position = Vector2(427, 252)
