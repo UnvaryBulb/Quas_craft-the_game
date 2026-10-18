@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://cxy050yrle583"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cncb8"]
+size = Vector2(1153, 24)
+
+[node name="Node2D" type="Node2D" unique_id=1565968776]
+
+[node name="Area2D" type="Area2D" parent="." unique_id=769812654]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1900405885]
+position = Vector2(575.5, 636)
+shape = SubResource("RectangleShape2D_cncb8")

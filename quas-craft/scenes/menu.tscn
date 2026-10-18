@@ -1,3 +1,65 @@
 [gd_scene format=3 uid="uid://dncuqehm1uk0r"]
 
+[ext_resource type="Script" uid="uid://bceaas87d3qv8" path="res://scripts/menu.gd" id="1_yqeox"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cncb8"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tt1r7"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gv56d"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_18m3x"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l61r3"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hw38i"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ueg2f"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wkqaw"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_k4ub6"]
+
 [node name="Node2D" type="Node2D" unique_id=560981897]
+script = ExtResource("1_yqeox")
+
+[node name="play" type="Button" parent="." unique_id=1853052987]
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 192.0
+offset_bottom = 130.0
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxTexture_cncb8")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_tt1r7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_gv56d")
+text = "Start"
+alignment = 0
+
+[node name="settings" type="Button" parent="." unique_id=531320577]
+offset_left = 64.0
+offset_top = 192.0
+offset_right = 192.0
+offset_bottom = 255.0
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxTexture_18m3x")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_l61r3")
+theme_override_styles/hover = SubResource("StyleBoxTexture_hw38i")
+text = "Settings
+"
+alignment = 0
+
+[node name="quit" type="Button" parent="." unique_id=1383248388]
+offset_left = 64.0
+offset_top = 320.0
+offset_right = 192.0
+offset_bottom = 384.0
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxTexture_ueg2f")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_wkqaw")
+theme_override_styles/hover = SubResource("StyleBoxTexture_k4ub6")
+text = "Quit"
+alignment = 0
+
+[connection signal="pressed" from="play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="quit" to="." method="_on_quit_pressed"]

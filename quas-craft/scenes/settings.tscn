@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://bpb33new4fdxm"]
+
+[ext_resource type="Script" uid="uid://duv0yf1qs8k7y" path="res://scripts/settings.gd" id="1_5p8wc"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cncb8"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tt1r7"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gv56d"]
+
+[node name="Node2D" type="Node2D" unique_id=1756598286]
+script = ExtResource("1_5p8wc")
+
+[node name="Exit" type="Button" parent="." unique_id=962295061]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 128.0
+offset_bottom = 73.0
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxTexture_cncb8")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_tt1r7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_gv56d")
+text = "Exit"
+
+[connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]
