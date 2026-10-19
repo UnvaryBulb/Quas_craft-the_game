@@ -47,9 +47,6 @@ func _physics_process(delta):
 		
 		# Вектор направления от центра объекта к цели
 		var pull_vector = target_pos - global_position
-		print("Мышь глобально: ", get_global_mouse_position())
-		print("Цель (target_pos): ", target_pos)
-		print("Позиция хлеба: ", global_position)
 		# МАГИЯ ФИЗИКИ:
 		# apply_force(сила, точка_приложения). 
 		# Мы прикладываем силу не к центру, а к точке захвата (grab_offset).
