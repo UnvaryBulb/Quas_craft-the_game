@@ -3,10 +3,10 @@
 [ext_resource type="Script" uid="uid://ukxwr0ngoqhf" path="res://scripts/breadslice.gd" id="1_a4eve"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cncb8"]
-size = Vector2(16, 32)
+size = Vector2(27, 42)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_cncb8"]
-size = Vector2(16, 32)
+size = Vector2(27, 42)
 
 [node name="slice" type="RigidBody2D" unique_id=577184731]
 input_pickable = true

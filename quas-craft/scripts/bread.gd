@@ -6,7 +6,7 @@ extends RigidBody2D
 @export var max_speed: float = 1200.0     # Максимальная скорость (чтобы физика не ломалась)
 @export var slice_scene: PackedScene
 @export var min_cut_speed: float = 150.0
-@export var max_cuts: int = 6
+@export var max_cuts: int = 8
 @export var final_slice_scene: PackedScene
 var is_grabbed: bool = false
 var grab_offset: Vector2 = Vector2.ZERO   # Точка, за которую мы схватили объект
@@ -56,10 +56,10 @@ func _execute_cut(knife: RigidBody2D):
 	var tween = create_tween()
 	var sprite = get_node("Sprite2D") 
 	if sprite:
-		tween.tween_property(sprite, "scale", sprite.scale * 0.8, 0.2)
+		tween.tween_property(sprite, "scale", sprite.scale * 0.87, 0.2)
 	var col_shape = get_node("CollisionShape2D")
 	if col_shape and col_shape.shape is RectangleShape2D:
-		tween.tween_property(col_shape.shape, "size", col_shape.shape.size * 0.8, 0.2)
+		tween.tween_property(col_shape.shape, "size", col_shape.shape.size * 0.87, 0.2)
 	
 	apply_impulse(Vector2(-20, -10))
 	print("Хлеб разрезан!")
