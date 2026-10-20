@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://o44bfnddaind"]
+
+[ext_resource type="Script" uid="uid://3x5hr1u0l3od" path="res://scripts/knife.gd" id="1_ufhdc"]
+[ext_resource type="Script" uid="uid://dyhqgpmfwu67c" path="res://scripts/bladearea.gd" id="2_syuqf"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_srw2c"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_cncb8"]
+size = Vector2(9, 44)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gv56d"]
+size = Vector2(8, 104)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_18m3x"]
+size = Vector2(8, 64)
+
+[node name="knife" type="RigidBody2D" unique_id=322766014]
+input_pickable = true
+physics_material_override = SubResource("PhysicsMaterial_srw2c")
+script = ExtResource("1_ufhdc")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1762800065]
+position = Vector2(0, -3.9999976)
+scale = Vector2(1.6666666, 2.3636365)
+texture = SubResource("PlaceholderTexture2D_cncb8")
+
+[node name="gripcol" type="CollisionShape2D" parent="." unique_id=1475950923]
+position = Vector2(-4, -4)
+shape = SubResource("RectangleShape2D_gv56d")
+
+[node name="bladearea" type="Area2D" parent="." unique_id=301222721]
+script = ExtResource("2_syuqf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bladearea" unique_id=952438345]
+position = Vector2(4, -24)
+shape = SubResource("RectangleShape2D_18m3x")

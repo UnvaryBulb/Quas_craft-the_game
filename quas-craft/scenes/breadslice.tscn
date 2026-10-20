@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://btrlx5egbeos2"]
+
+[ext_resource type="Script" uid="uid://ukxwr0ngoqhf" path="res://scripts/breadslice.gd" id="1_a4eve"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cncb8"]
+size = Vector2(16, 32)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_cncb8"]
+size = Vector2(16, 32)
+
+[node name="slice" type="RigidBody2D" unique_id=577184731]
+input_pickable = true
+script = ExtResource("1_a4eve")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1676340397]
+shape = SubResource("RectangleShape2D_cncb8")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1020387431]
+texture = SubResource("PlaceholderTexture2D_cncb8")
