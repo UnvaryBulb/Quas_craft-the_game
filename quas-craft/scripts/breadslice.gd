@@ -1,8 +1,8 @@
 extends RigidBody2D
 
 # --- НАСТРОЙКИ ВЕСА И УПРУГОСТИ (Настраивай в Инспекторе!) ---
-@export var pull_strength: float = 70.0   # Сила "магнита". Чем МЕНЬШЕ, тем ТЯЖЕЛЕЕ объект.
-@export var air_resistance: float = 4.0   # Трение в воздухе. Гасит раскачивание.
+@export var pull_strength: float = 50.0   # Сила "магнита". Чем МЕНЬШЕ, тем ТЯЖЕЛЕЕ объект.
+@export var air_resistance: float = 8.0   # Трение в воздухе. Гасит раскачивание.
 @export var max_speed: float = 1200.0     # Максимальная скорость (чтобы физика не ломалась)
 
 var is_grabbed: bool = false
@@ -19,7 +19,7 @@ func _unhandled_input(event):
 			if is_grabbed:
 				stop_grab()
 # Функция обработки клика мыши по объекту
-func _on_input_event(viewport, event, shape_idx):
+func _on_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:

@@ -25,7 +25,7 @@ func _unhandled_input(event):
 			if is_grabbed:
 				stop_grab()
 # Функция обработки клика мыши по объекту
-func _on_input_event(viewport, event, shape_idx):
+func _on_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:
@@ -41,17 +41,13 @@ func try_cut(knife: RigidBody2D):
 func _execute_cut(knife: RigidBody2D):
 	cut_cooldown = 0.5
 	if cut_count >= max_cuts:
-		_spawn_final_slice(knife)
-		queue_free()  # Удаляем текущий хлеб
+		call_deferred("_spawn_final_slice", knife)
+		# Удаляем хлеб с задержкой, чтобы анимация успела пройти
+		get_tree().create_timer(0.1).timeout.connect(queue_free)
 		return
 	
 	# Обычный разрез - спавним кусочек
-	if slice_scene:
-		var slice = slice_scene.instantiate()
-		get_parent().add_child(slice)
-		slice.global_position = global_position + Vector2(40, -20)
-		slice.linear_velocity = knife.linear_velocity * 0.8
-		slice.angular_velocity = randf_range(-5, 5)
+	call_deferred("_spawn_slice", knife)
 	
 	var tween = create_tween()
 	var sprite = get_node("Sprite2D") 
@@ -63,8 +59,16 @@ func _execute_cut(knife: RigidBody2D):
 	
 	apply_impulse(Vector2(-20, -10))
 	print("Хлеб разрезан!")
+func _spawn_slice(knife: RigidBody2D):
+	if slice_scene:
+		var slice = slice_scene.instantiate()
+		get_parent().add_child(slice)
+		slice.global_position = global_position + Vector2(40, -20)
+		slice.linear_velocity = knife.linear_velocity * 0.8
+		slice.angular_velocity = randf_range(-5, 5)
+		print("Кусочек создан!")
 func _spawn_final_slice(knife: RigidBody2D):
-	# Спавним финальный кусочек
+	# Спавним финальный кусочек ОТЛОЖЕННО
 	if final_slice_scene:
 		var final_slice = final_slice_scene.instantiate()
 		get_parent().add_child(final_slice)

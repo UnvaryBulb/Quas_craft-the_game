@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://bqiq7a45qhaun"]
+
+[ext_resource type="Script" uid="uid://bravkix5aonft" path="res://scripts/spoom.gd" id="1_hwqkx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cncb8"]
+size = Vector2(16, 56)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cncb8"]
+radius = 16.0
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_cncb8"]
+size = Vector2(16, 56)
+
+[node name="spoom" type="RigidBody2D" unique_id=1545255965]
+input_pickable = true
+mass = 0.5
+script = ExtResource("1_hwqkx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=304855288]
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_cncb8")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=508613411]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1115636300]
+position = Vector2(0, -32)
+shape = SubResource("CircleShape2D_cncb8")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=549053197]
+position = Vector2(0, -12)
+texture = SubResource("PlaceholderTexture2D_cncb8")

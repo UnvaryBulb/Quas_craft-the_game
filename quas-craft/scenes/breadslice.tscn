@@ -10,6 +10,7 @@ size = Vector2(27, 42)
 
 [node name="slice" type="RigidBody2D" unique_id=577184731]
 input_pickable = true
+mass = 0.3
 script = ExtResource("1_a4eve")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1676340397]

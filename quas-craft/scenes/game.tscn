@@ -2,6 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://bm5u755mm7md4" path="res://scenes/Bread.tscn" id="1_uwrxv"]
 [ext_resource type="PackedScene" uid="uid://o44bfnddaind" path="res://scenes/knife.tscn" id="2_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://dswicelsk8jsy" path="res://scenes/glassjar.tscn" id="3_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://prnju3sykvp4" path="res://scenes/sugarcube.tscn" id="4_lbhrr"]
+[ext_resource type="Texture2D" uid="uid://cbqiqiqoyjyfb" path="res://assets/sprites/sugarcan.png" id="5_iywne"]
+[ext_resource type="PackedScene" uid="uid://bqiq7a45qhaun" path="res://scenes/spoom.tscn" id="5_p57ef"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cncb8"]
 size = Vector2(1153, 21)
@@ -12,6 +16,15 @@ size = Vector2(1150, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tt1r7"]
 size = Vector2(38, 1561)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gv56d"]
+size = Vector2(44, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_18m3x"]
+size = Vector2(4, 38)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l61r3"]
+size = Vector2(4, 42)
 
 [node name="Node2D" type="Node2D" unique_id=1565968776]
 
@@ -25,13 +38,6 @@ shape = SubResource("RectangleShape2D_cncb8")
 [node name="Sprite2D" type="Sprite2D" parent="table" unique_id=2032321959]
 texture = SubResource("PlaceholderTexture2D_cncb8")
 
-[node name="Bread" parent="." unique_id=2128048116 instance=ExtResource("1_uwrxv")]
-position = Vector2(427, 252)
-pull_strength = null
-air_resistance = null
-max_speed = null
-min_cut_speed = null
-
 [node name="Walls" type="StaticBody2D" parent="." unique_id=1827850368]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls" unique_id=1435038164]
@@ -44,3 +50,47 @@ shape = SubResource("RectangleShape2D_tt1r7")
 
 [node name="knife" parent="." unique_id=322766014 instance=ExtResource("2_yqjtg")]
 position = Vector2(296, 217)
+
+[node name="Node2D" parent="." unique_id=1431281665 instance=ExtResource("3_lnu2h")]
+position = Vector2(1057, 557)
+
+[node name="Bread" parent="." unique_id=2128048116 instance=ExtResource("1_uwrxv")]
+position = Vector2(374, 335)
+
+[node name="sugarcan" type="StaticBody2D" parent="." unique_id=49662271]
+position = Vector2(64, 616)
+
+[node name="sugarcube" parent="sugarcan" unique_id=5124026 instance=ExtResource("4_lbhrr")]
+position = Vector2(0, -88)
+
+[node name="bottom" type="CollisionShape2D" parent="sugarcan" unique_id=599630972]
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_gv56d")
+
+[node name="lef" type="CollisionShape2D" parent="sugarcan" unique_id=1620547183]
+position = Vector2(-20, -17)
+shape = SubResource("RectangleShape2D_18m3x")
+
+[node name="rig" type="CollisionShape2D" parent="sugarcan" unique_id=1714042582]
+position = Vector2(20, -21)
+shape = SubResource("RectangleShape2D_l61r3")
+
+[node name="spoom" parent="sugarcan/rig" unique_id=1545255965 instance=ExtResource("5_p57ef")]
+position = Vector2(76, -45)
+
+[node name="Sprite2D" type="Sprite2D" parent="sugarcan" unique_id=1231914128]
+position = Vector2(6.4074993e-07, -19.999977)
+scale = Vector2(1.9932948, 1.9932948)
+texture = ExtResource("5_iywne")
+
+[node name="sugarcube2" parent="sugarcan" unique_id=274810153 instance=ExtResource("4_lbhrr")]
+position = Vector2(0, -64)
+
+[node name="sugarcube3" parent="sugarcan" unique_id=701639423 instance=ExtResource("4_lbhrr")]
+position = Vector2(0, -144)
+
+[node name="sugarcube4" parent="sugarcan" unique_id=153481608 instance=ExtResource("4_lbhrr")]
+position = Vector2(0, -216)
+
+[node name="sugarcube5" parent="sugarcan" unique_id=921330083 instance=ExtResource("4_lbhrr")]
+position = Vector2(0, -288)
