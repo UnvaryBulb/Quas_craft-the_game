@@ -48,15 +48,6 @@ shape = SubResource("RectangleShape2D_tt1r7")
 position = Vector2(1179, -137)
 shape = SubResource("RectangleShape2D_tt1r7")
 
-[node name="knife" parent="." unique_id=322766014 instance=ExtResource("2_yqjtg")]
-position = Vector2(296, 217)
-
-[node name="Node2D" parent="." unique_id=1431281665 instance=ExtResource("3_lnu2h")]
-position = Vector2(1057, 557)
-
-[node name="Bread" parent="." unique_id=2128048116 instance=ExtResource("1_uwrxv")]
-position = Vector2(374, 335)
-
 [node name="sugarcan" type="StaticBody2D" parent="." unique_id=49662271]
 position = Vector2(64, 616)
 
@@ -94,3 +85,12 @@ position = Vector2(0, -216)
 
 [node name="sugarcube5" parent="sugarcan" unique_id=921330083 instance=ExtResource("4_lbhrr")]
 position = Vector2(0, -288)
+
+[node name="knife" parent="." unique_id=322766014 instance=ExtResource("2_yqjtg")]
+position = Vector2(296, 217)
+
+[node name="Bread" parent="." unique_id=2128048116 instance=ExtResource("1_uwrxv")]
+position = Vector2(374, 335)
+
+[node name="Node2D" parent="." unique_id=1431281665 instance=ExtResource("3_lnu2h")]
+position = Vector2(1057, 557)

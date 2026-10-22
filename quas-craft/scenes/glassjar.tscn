@@ -43,6 +43,7 @@ position = Vector2(0, 56)
 shape = SubResource("RectangleShape2D_cncb8")
 
 [node name="Water" type="Area2D" parent="." unique_id=1573207165]
+input_pickable = false
 script = ExtResource("1_eg5bp")
 
 [node name="wattercol" type="CollisionShape2D" parent="Water" unique_id=2124724122]
