@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bqiq7a45qhaun"]
 
 [ext_resource type="Script" uid="uid://bravkix5aonft" path="res://scripts/spoom.gd" id="1_hwqkx"]
+[ext_resource type="Script" uid="uid://gnyx2pytwhjj" path="res://scripts/stirzone.gd" id="2_qb3va"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cncb8"]
 size = Vector2(16, 56)
@@ -20,9 +21,10 @@ script = ExtResource("1_hwqkx")
 position = Vector2(0, -12)
 shape = SubResource("RectangleShape2D_cncb8")
 
-[node name="Area2D" type="Area2D" parent="." unique_id=508613411]
+[node name="stirzone" type="Area2D" parent="." unique_id=508613411]
+script = ExtResource("2_qb3va")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1115636300]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="stirzone" unique_id=1115636300]
 position = Vector2(0, -32)
 shape = SubResource("CircleShape2D_cncb8")
 

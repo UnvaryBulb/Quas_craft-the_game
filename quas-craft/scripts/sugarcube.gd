@@ -6,59 +6,50 @@ extends RigidBody2D
 @export var max_speed: float = 1200.0     # Максимальная скорость (чтобы физика не ломалась)
 
 var is_grabbed: bool = false
-var grab_offset: Vector2 = Vector2.ZERO   # Точка, за которую мы схватили объект
+var grab_offset: Vector2 = Vector2.ZERO
 
 func _ready():
-	# Подключаем сигнал клика по самому объекту
-	# ВАЖНО: У RigidBody2D должен быть CollisionShape2D, иначе клик не сработает!
+	add_to_group("sugar")  # ВАЖНО: группа "sugar"
 	self.input_event.connect(_on_input_event)
+
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
-			# ЛКМ отпущена где угодно на экране
 			if is_grabbed:
 				stop_grab()
-# Функция обработки клика мыши по объекту
+
 func _on_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:
-				start_grab(event.position) # event.position - это глобальные координаты клика
+				start_grab(event.position)
 
-# Начинаем брать объект
 func start_grab(global_click_pos: Vector2):
 	is_grabbed = true
-	sleeping = false # Будим объект, если он "уснул"
-	
-	# Вычисляем точку захвата в ЛОКАЛЬНЫХ координатах объекта.
-	# Это то самое "место, за которое мы беремся"!
+	sleeping = false
 	grab_offset = to_local(global_click_pos)
-	
-	# Чуть снижаем гравитацию, чтобы таскать было удобнее, но вес оставался
-	gravity_scale = 0.3 
+	gravity_scale = 0.3
 
-# Отпускаем объект
 func stop_grab():
 	is_grabbed = false
-	gravity_scale = 1.0 # Возвращаем нормальный вес
+	gravity_scale = 1.0
 
 func _physics_process(delta):
 	if is_grabbed:
 		var global_grab_offset = grab_offset.rotated(rotation)
-		# Куда мы хотим притянуть объект (позиция мыши минус смещение захвата)
 		var target_pos = get_global_mouse_position() - global_grab_offset
-		
-		# Вектор направления от центра объекта к цели
 		var pull_vector = target_pos - global_position
-		# МАГИЯ ФИЗИКИ:
-		# apply_force(сила, точка_приложения). 
-		# Мы прикладываем силу не к центру, а к точке захвата (grab_offset).
-		# Из-за этого объект будет естественно вращаться и болтаться!
-		apply_force(pull_vector * pull_strength, global_grab_offset)
 		
-		# Искусственное трение, чтобы объект не летал как бешеный
+		pull_vector = pull_vector.limit_length(200.0)
+		
+		apply_force(pull_vector * pull_strength, global_grab_offset)
 		linear_velocity *= (1.0 - air_resistance * delta)
 		angular_velocity *= (1.0 - air_resistance * delta)
-		
-		# Ограничиваем скорость, иначе при резком рывке мыши физика сойдет с ума
 		linear_velocity = linear_velocity.limit_length(max_speed)
+# В конец файла добавь эту функцию
+func get_ingredient_type() -> String:
+	if is_in_group("breadslice"):
+		return "breadslice"
+	elif is_in_group("sugar"):
+		return "sugar"
+	return ""

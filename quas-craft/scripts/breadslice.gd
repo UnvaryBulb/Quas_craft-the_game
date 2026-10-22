@@ -9,6 +9,7 @@ var is_grabbed: bool = false
 var grab_offset: Vector2 = Vector2.ZERO   # Точка, за которую мы схватили объект
 
 func _ready():
+	add_to_group("breadslice")
 	# Подключаем сигнал клика по самому объекту
 	# ВАЖНО: У RigidBody2D должен быть CollisionShape2D, иначе клик не сработает!
 	self.input_event.connect(_on_input_event)
@@ -62,3 +63,10 @@ func _physics_process(delta):
 		
 		# Ограничиваем скорость, иначе при резком рывке мыши физика сойдет с ума
 		linear_velocity = linear_velocity.limit_length(max_speed)
+# В конец файла добавь эту функцию
+func get_ingredient_type() -> String:
+	if is_in_group("breadslice"):
+		return "breadslice"
+	elif is_in_group("sugar"):
+		return "sugar"
+	return ""

@@ -1,64 +1,94 @@
 extends RigidBody2D
 
-# --- НАСТРОЙКИ ВЕСА И УПРУГОСТИ (Настраивай в Инспекторе!) ---
-@export var pull_strength: float = 50.0   # Сила "магнита". Чем МЕНЬШЕ, тем ТЯЖЕЛЕЕ объект.
-@export var air_resistance: float = 20.0   # Трение в воздухе. Гасит раскачивание.
-@export var max_speed: float = 1200.0     # Максимальная скорость (чтобы физика не ломалась)
+@export var pull_strength: float = 50.0
+@export var air_resistance: float = 4.0
+@export var max_speed: float = 1200.0
 
 var is_grabbed: bool = false
-var grab_offset: Vector2 = Vector2.ZERO   # Точка, за которую мы схватили объект
+var grab_offset: Vector2 = Vector2.ZERO
+var jar_manager: Node2D = null
+var is_inside_water: bool = false  # Флаг: ложка в воде?
 
 func _ready():
-	# Подключаем сигнал клика по самому объекту
-	# ВАЖНО: У RigidBody2D должен быть CollisionShape2D, иначе клик не сработает!
 	self.input_event.connect(_on_input_event)
+	_find_jar_manager()
+
+func _find_jar_manager():
+	var jars = get_tree().get_nodes_in_group("jar_managers")
+	if jars.size() > 0:
+		jar_manager = jars[0]
+		print("Ложка нашла JarManager!")
+	else:
+		print("ВНИМАНИЕ: Ложка не нашла JarManager!")
+
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
-			# ЛКМ отпущена где угодно на экране
 			if is_grabbed:
 				stop_grab()
-# Функция обработки клика мыши по объекту
+
 func _on_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:
-				start_grab(event.position) # event.position - это глобальные координаты клика
+				start_grab(event.position)
 
-# Начинаем брать объект
 func start_grab(global_click_pos: Vector2):
 	is_grabbed = true
-	sleeping = false # Будим объект, если он "уснул"
-	
-	# Вычисляем точку захвата в ЛОКАЛЬНЫХ координатах объекта.
-	# Это то самое "место, за которое мы беремся"!
+	sleeping = false
 	grab_offset = to_local(global_click_pos)
-	
-	# Чуть снижаем гравитацию, чтобы таскать было удобнее, но вес оставался
-	gravity_scale = 0.3 
+	gravity_scale = 0.3
 
-# Отпускаем объект
 func stop_grab():
 	is_grabbed = false
-	gravity_scale = 1.0 # Возвращаем нормальный вес
+	gravity_scale = 1.0
+	# Когда отпускаем ложку — точно прекращаем размешивание
+	if jar_manager:
+		jar_manager.stop_stirring()
 
 func _physics_process(delta):
 	if is_grabbed:
 		var global_grab_offset = grab_offset.rotated(rotation)
-		# Куда мы хотим притянуть объект (позиция мыши минус смещение захвата)
 		var target_pos = get_global_mouse_position() - global_grab_offset
-		
-		# Вектор направления от центра объекта к цели
 		var pull_vector = target_pos - global_position
-		# МАГИЯ ФИЗИКИ:
-		# apply_force(сила, точка_приложения). 
-		# Мы прикладываем силу не к центру, а к точке захвата (grab_offset).
-		# Из-за этого объект будет естественно вращаться и болтаться!
-		apply_force(pull_vector * pull_strength, global_grab_offset)
 		
-		# Искусственное трение, чтобы объект не летал как бешеный
+		pull_vector = pull_vector.limit_length(200.0)
+		
+		apply_force(pull_vector * pull_strength, global_grab_offset)
 		linear_velocity *= (1.0 - air_resistance * delta)
 		angular_velocity *= (1.0 - air_resistance * delta)
-		
-		# Ограничиваем скорость, иначе при резком рывке мыши физика сойдет с ума
 		linear_velocity = linear_velocity.limit_length(max_speed)
+		
+		# Проверяем размешивание ТОЛЬКО если ложка в воде
+		_check_stirring()
+	else:
+		# Если ложку отпустили — не размешиваем
+		if jar_manager:
+			jar_manager.stop_stirring()
+
+func _check_stirring():
+	if jar_manager == null:
+		return
+	
+	# ГЛАВНОЕ: размешиваем только если ложка ВНУТРИ воды
+	if not is_inside_water:
+		return
+	
+	# Проверяем скорость движения ложки
+	var speed = linear_velocity.length()
+	if speed > 50:
+		jar_manager.start_stirring()
+	else:
+		jar_manager.stop_stirring()
+
+# Вызывается, когда ложка входит в зону воды
+func _on_water_zone_entered():
+	is_inside_water = true
+	print("Ложка вошла в воду!")
+
+# Вызывается, когда ложка выходит из зоны воды
+func _on_water_zone_exited():
+	is_inside_water = false
+	if jar_manager:
+		jar_manager.stop_stirring()
+	print("Ложка вышла из воды!")

@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://dswicelsk8jsy"]
 
+[ext_resource type="Script" uid="uid://dplr26tkbkj1k" path="res://scripts/glassjar.gd" id="1_2agkx"]
 [ext_resource type="Script" uid="uid://v6ltfayjpqqa" path="res://scripts/water.gd" id="1_eg5bp"]
 [ext_resource type="Texture2D" uid="uid://c14aob8yec8jh" path="res://assets/sprites/bauble.png" id="2_82c3e"]
 
@@ -26,7 +27,8 @@ initial_velocity_max = 40.0
 gravity = Vector3(0, 0, 0)
 damping_max = 0.5
 
-[node name="jar" type="Node2D" unique_id=1431281665]
+[node name="jar_manager" type="Node2D" unique_id=1431281665 groups=["jar_managers"]]
+script = ExtResource("1_2agkx")
 
 [node name="GlassWalls" type="StaticBody2D" parent="." unique_id=749062468]
 
@@ -42,11 +44,11 @@ shape = SubResource("RectangleShape2D_gv56d")
 position = Vector2(0, 56)
 shape = SubResource("RectangleShape2D_cncb8")
 
-[node name="Water" type="Area2D" parent="." unique_id=1573207165]
+[node name="WaterZone" type="Area2D" parent="." unique_id=1573207165 groups=["water_zone"]]
 input_pickable = false
 script = ExtResource("1_eg5bp")
 
-[node name="wattercol" type="CollisionShape2D" parent="Water" unique_id=2124724122]
+[node name="wattercol" type="CollisionShape2D" parent="WaterZone" unique_id=2124724122]
 position = Vector2(0, -24)
 shape = SubResource("RectangleShape2D_18m3x")
 
@@ -63,7 +65,7 @@ color = Color(0.25490198, 1, 1, 0.3647059)
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=49785043]
 position = Vector2(0, 40)
-amount = 10
+amount = 1
 sub_emitter = NodePath(".")
 texture = ExtResource("2_82c3e")
 lifetime = 2.01
