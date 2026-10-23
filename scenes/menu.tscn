@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://dncuqehm1uk0r"]
+
+[ext_resource type="Script" uid="uid://bceaas87d3qv8" path="res://scripts/menu.gd" id="1_yqeox"]
+[ext_resource type="Script" uid="uid://bglyqpgnsxkfh" path="res://scripts/music_control.gd" id="2_vjb58"]
+[ext_resource type="Script" uid="uid://4b3t2xk03if6" path="res://scripts/sfx_control.gd" id="3_con2f"]
+[ext_resource type="Texture2D" uid="uid://bxk225q6c261u" path="res://assets/sprites/music.png" id="4_4ytvr"]
+[ext_resource type="Texture2D" uid="uid://g1gm6c1uommb" path="res://assets/sprites/sound.png" id="5_g3eks"]
+[ext_resource type="AudioStream" uid="uid://do28tqgojtndd" path="res://assets/sfx/Main Menu Theme.ogg" id="6_menumusic"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cncb8"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tt1r7"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gv56d"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ueg2f"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wkqaw"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_k4ub6"]
+
+[node name="Node2D" type="Node2D" unique_id=560981897]
+script = ExtResource("1_yqeox")
+
+[node name="play" type="Button" parent="." unique_id=1853052987]
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 192.0
+offset_bottom = 130.0
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxTexture_cncb8")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_tt1r7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_gv56d")
+text = "Start"
+alignment = 0
+
+[node name="quit" type="Button" parent="." unique_id=1383248388]
+offset_left = 64.0
+offset_top = 512.0
+offset_right = 192.0
+offset_bottom = 576.0
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxTexture_ueg2f")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_wkqaw")
+theme_override_styles/hover = SubResource("StyleBoxTexture_k4ub6")
+text = "Quit"
+alignment = 0
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=1701579119]
+stream = ExtResource("6_menumusic")
+autoplay = true
+bus = &"Music"
+
+[node name="MusicControl" type="HSlider" parent="." unique_id=304236662]
+offset_left = 1127.9519
+offset_top = 632.0001
+offset_right = 1296.7057
+offset_bottom = 648.0481
+rotation = -1.5732167
+max_value = 2.0
+step = 0.01
+value = 1.0
+script = ExtResource("2_vjb58")
+
+[node name="Music" type="Sprite2D" parent="MusicControl" unique_id=270246488]
+position = Vector2(182.98499, 6.442993)
+rotation = 1.5732167
+texture = ExtResource("4_4ytvr")
+
+[node name="SFXControl" type="HSlider" parent="." unique_id=1309312870]
+offset_left = 1088.0
+offset_top = 632.0
+offset_right = 1256.0
+offset_bottom = 648.0
+rotation = -1.5714799
+max_value = 2.0
+step = 0.01
+value = 1.0
+script = ExtResource("3_con2f")
+
+[node name="Sound" type="Sprite2D" parent="SFXControl" unique_id=190507697]
+position = Vector2(177.99457, 8.121704)
+rotation = 1.5714799
+scale = Vector2(1, 1.0000002)
+texture = ExtResource("5_g3eks")
+
+[connection signal="pressed" from="play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="quit" to="." method="_on_quit_pressed"]

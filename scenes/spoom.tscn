@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://bqiq7a45qhaun"]
+
+[ext_resource type="Script" uid="uid://bravkix5aonft" path="res://scripts/spoom.gd" id="1_hwqkx"]
+[ext_resource type="Texture2D" uid="uid://c1gd8hs7rmahx" path="res://assets/sprites/spoon.png" id="2_qb3va"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cncb8"]
+size = Vector2(14, 60)
+
+[node name="spoom" type="RigidBody2D" unique_id=1545255965]
+collision_layer = 4
+mass = 0.5
+script = ExtResource("1_hwqkx")
+pick_priority = 1
+upright_strength = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=304855288]
+shape = SubResource("RectangleShape2D_cncb8")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=549053197]
+texture = ExtResource("2_qb3va")
+
+[node name="Tip" type="Marker2D" parent="." unique_id=1150169712]
+position = Vector2(0, 28)
