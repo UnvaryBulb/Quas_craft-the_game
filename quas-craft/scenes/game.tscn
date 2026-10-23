@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://dvwdpllwta6wl" path="res://scripts/game.gd" id="8_game"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cncb8"]
-size = Vector2(1153, 21)
+size = Vector2(1153, 23)
 
 [sub_resource type="Gradient" id="Gradient_table"]
 colors = PackedColorArray(0.5, 0.35, 0.22, 1, 0.34, 0.22, 0.13, 1)
@@ -48,6 +48,9 @@ tags = {
 }
 loop = true
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g4v7s"]
+size = Vector2(1151, 2)
+
 [node name="Node2D" type="Node2D" unique_id=1565968776]
 script = ExtResource("8_game")
 
@@ -55,7 +58,7 @@ script = ExtResource("8_game")
 position = Vector2(576, 636)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="table" unique_id=1900405885]
-position = Vector2(-0.5, 0.5)
+position = Vector2(-0.5, -0.5)
 shape = SubResource("RectangleShape2D_cncb8")
 
 [node name="Sprite2D" type="Sprite2D" parent="table" unique_id=2032321959]
@@ -93,6 +96,7 @@ texture = ExtResource("5_iywne")
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=855228886]
 stream = SubResource("AudioStreamOggVorbis_u5sy4")
+volume_db = -5.0
 autoplay = true
 bus = &"Music"
 
@@ -122,3 +126,9 @@ position = Vector2(142, 590)
 
 [node name="jar_manager" parent="." unique_id=1431281665 instance=ExtResource("3_lnu2h")]
 position = Vector2(963, 562)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=2055519482]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2116241412]
+position = Vector2(575.5, 624)
+shape = SubResource("RectangleShape2D_g4v7s")
