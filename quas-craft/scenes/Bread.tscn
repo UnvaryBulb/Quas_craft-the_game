@@ -4,25 +4,34 @@
 [ext_resource type="PackedScene" uid="uid://btrlx5egbeos2" path="res://scenes/breadslice.tscn" id="2_7ysu2"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tt1r7"]
-bounce = 0.2
+friction = 0.8
+bounce = 0.1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_18m3x"]
-size = Vector2(64, 128)
+size = Vector2(160, 48)
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_cncb8"]
-size = Vector2(64, 128)
+[sub_resource type="Gradient" id="Gradient_loaf"]
+colors = PackedColorArray(0.93, 0.76, 0.44, 1, 0.72, 0.5, 0.25, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_loaf"]
+gradient = SubResource("Gradient_loaf")
+width = 160
+height = 48
+fill_to = Vector2(0, 1)
 
 [node name="Bread" type="RigidBody2D" unique_id=2128048116]
 texture_filter = 1
-input_pickable = true
+collision_layer = 2
+collision_mask = 3
+mass = 3.0
 physics_material_override = SubResource("PhysicsMaterial_tt1r7")
 script = ExtResource("1_v31ev")
 slice_scene = ExtResource("2_7ysu2")
-final_slice_scene = ExtResource("2_7ysu2")
+max_accel = 2500.0
+held_angular_damp = 4.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=935711717]
 shape = SubResource("RectangleShape2D_18m3x")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1705537155]
-position = Vector2(5.722046e-06, 9.536743e-07)
-texture = SubResource("PlaceholderTexture2D_cncb8")
+texture = SubResource("GradientTexture2D_loaf")
