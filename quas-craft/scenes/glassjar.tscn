@@ -45,6 +45,8 @@ position = Vector2(0, 56)
 shape = SubResource("RectangleShape2D_cncb8")
 
 [node name="WaterZone" type="Area2D" parent="." unique_id=1573207165 groups=["water_zone"]]
+collision_layer = 0
+collision_mask = 6
 input_pickable = false
 script = ExtResource("1_eg5bp")
 
@@ -55,6 +57,7 @@ shape = SubResource("RectangleShape2D_18m3x")
 [node name="back" type="Sprite2D" parent="." unique_id=601537448]
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=126626407]
+mouse_filter = 2
 offset_left = -80.0
 offset_top = -96.0
 offset_right = 80.0
@@ -65,8 +68,8 @@ color = Color(0.25490198, 1, 1, 0.3647059)
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=49785043]
 position = Vector2(0, 40)
-amount = 1
-sub_emitter = NodePath(".")
+emitting = false
+amount = 28
 texture = ExtResource("2_82c3e")
 lifetime = 2.01
 process_material = SubResource("ParticleProcessMaterial_eg5bp")

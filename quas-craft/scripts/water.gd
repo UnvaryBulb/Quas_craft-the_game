@@ -1,33 +1,24 @@
 extends Area2D
 
-@export var water_damp: float = 6.0
-@export var water_gravity: float = 0.2
+@export var water_gravity: float = 160.0
+@export var water_linear_damp: float = 3.5
+@export var water_angular_damp: float = 3.0
 
-var jar_manager: Node2D = null
+var _jar: KvassJar
 
-func _ready():
+
+func _ready() -> void:
+	_jar = get_parent() as KvassJar
+	gravity_space_override = Area2D.SPACE_OVERRIDE_REPLACE
+	gravity_direction = Vector2.DOWN
+	gravity = water_gravity
+	linear_damp_space_override = Area2D.SPACE_OVERRIDE_COMBINE
+	linear_damp = water_linear_damp
+	angular_damp_space_override = Area2D.SPACE_OVERRIDE_COMBINE
+	angular_damp = water_angular_damp
 	body_entered.connect(_on_body_entered)
-	body_exited.connect(_on_body_exited)
-	
-	# Ищем менеджер банки (родитель или сосед)
-	jar_manager = get_parent()
-
-func _on_body_entered(body: Node2D):
-	if body is RigidBody2D:
-		body.linear_damp = water_damp
-		body.gravity_scale = water_gravity
-		
-		# Определяем тип ингредиента
-		if body.has_method("get_ingredient_type") and not body.get_meta("added_to_jar", false):
-			var type = body.get_ingredient_type()
-			if jar_manager:
-				jar_manager.add_ingredient(type)
-			# Помечаем, что уже добавили
-			body.set_meta("added_to_jar", true)
-			print("Добавлен ингредиент: ", type)
 
 
-func _on_body_exited(body: Node2D):
-	if body is RigidBody2D:
-		body.linear_damp = 1.0
-		body.gravity_scale = 1.0
+func _on_body_entered(body: Node2D) -> void:
+	if _jar != null and body is Ingredient:
+		_jar.absorb(body as Ingredient)
