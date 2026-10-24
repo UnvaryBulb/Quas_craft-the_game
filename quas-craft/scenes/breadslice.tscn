@@ -1,22 +1,14 @@
 [gd_scene format=3 uid="uid://btrlx5egbeos2"]
 
 [ext_resource type="Script" uid="uid://ukxwr0ngoqhf" path="res://scripts/breadslice.gd" id="1_a4eve"]
+[ext_resource type="Texture2D" uid="uid://cco53l0adekeo" path="res://assets/sprites/game/bread_l.png" id="2_ehwal"]
 [ext_resource type="AudioStream" uid="uid://ham6x6glp6f0" path="res://assets/sfx/bread_Drop.ogg" id="2_x4geu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cncb8"]
-size = Vector2(20, 44)
-
-[sub_resource type="Gradient" id="Gradient_slice"]
-colors = PackedColorArray(0.97, 0.86, 0.6, 1, 0.88, 0.72, 0.42, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_slice"]
-gradient = SubResource("Gradient_slice")
-width = 20
-height = 44
-fill_to = Vector2(0, 1)
+size = Vector2(22, 46)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g4v7s"]
-size = Vector2(20, 44)
+size = Vector2(22, 46)
 
 [node name="slice" type="RigidBody2D" unique_id=577184731]
 collision_layer = 2
@@ -30,7 +22,9 @@ max_accel = 7000.0
 shape = SubResource("RectangleShape2D_cncb8")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1020387431]
-texture = SubResource("GradientTexture2D_slice")
+position = Vector2(1.9073486e-06, -5.9604645e-08)
+scale = Vector2(1.1, 0.56790125)
+texture = ExtResource("2_ehwal")
 
 [node name="fallsound" type="AudioStreamPlayer" parent="." unique_id=370415903]
 stream = ExtResource("2_x4geu")

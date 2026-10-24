@@ -13,6 +13,8 @@ signal finished(title: String, score: float)
 @export var laps_needed: float = 5.0
 ## ближе к центру банки круги не считаются
 @export var stir_min_radius: float = 14.0
+## сколько радиан размешивания растворяет один кусок/кубик (1.5 ≈ четверть круга)
+@export var stir_per_dissolve: float = 1.5
 @export var water_color: Color = Color(0.0, 0.691, 0.909, 0.6)
 @export var kvass_color: Color = Color(0.51, 0.31, 0.04, 0.8)
 
@@ -30,6 +32,8 @@ var _has_prev := false
 var _dir := 0.0
 var _run := 0.0
 var _run_counted := false
+var _floating: Array[Ingredient] = []
+var _dissolve_charge := 0.0
 
 @onready var _liquid: ColorRect = $ColorRect
 @onready var _bubbles: GPUParticles2D = $GPUParticles2D
@@ -52,9 +56,8 @@ func _process(delta: float) -> void:
 	_bubbles.speed_scale = 1.0 + stir_intensity * 1.5
 
 
-## вызывается зоной воды, когда в банку попало что-то
 func absorb(item: Ingredient) -> void:
-	if is_done or item.consumed:
+	if is_done or item.consumed or _floating.has(item):
 		return
 	var kind := item.get_kind()
 	if kind == &"bread":
@@ -63,8 +66,19 @@ func absorb(item: Ingredient) -> void:
 		sugar_cubes += 1
 	else:
 		return
-	item.dissolve()
-	stir_intensity = maxf(stir_intensity, 0.6)  # пузырьки
+	_floating.append(item)
+	stir_intensity = maxf(stir_intensity, 0.6)  # пузырьки от всплеска
+	ingredients_changed.emit(bread_pieces, sugar_cubes)
+
+
+func unabsorb(item: Ingredient) -> void:
+	if not _floating.has(item):
+		return  # уже растворился, его счёт не трогаем
+	_floating.erase(item)
+	if item.get_kind() == &"bread":
+		bread_pieces = maxi(bread_pieces - 1, 0)
+	elif item.get_kind() == &"sugar":
+		sugar_cubes = maxi(sugar_cubes - 1, 0)
 	ingredients_changed.emit(bread_pieces, sugar_cubes)
 
 
@@ -111,12 +125,28 @@ func quality_title(score: float) -> String:
 		return "Слабый квас"
 	return "Мутная брага"
 
+func _dissolve_next() -> void:
+	while not _floating.is_empty():
+		var item: Ingredient = _floating.pop_front()
+		if is_instance_valid(item) and not item.consumed:
+			item.dissolve()
+			return
+
 
 func _add_sweep(delta_angle: float) -> void:
 	var step := absf(delta_angle)
 	if step < MIN_STEP:
 		return
 	stir_intensity = minf(stir_intensity + step * 2.0, 1.0)
+
+	# размешивание растворяет плавающие в воде куски и кубики
+	_dissolve_charge += step
+	while _dissolve_charge >= stir_per_dissolve and not _floating.is_empty():
+		_dissolve_charge -= stir_per_dissolve
+		_dissolve_next()
+	if _floating.is_empty():
+		_dissolve_charge = 0.0
+
 	var dir := signf(delta_angle)
 	if dir != _dir:
 		_dir = dir

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c14aob8yec8jh"
-path="res://.godot/imported/bauble.png-47213f4e6c8303e506fd802c24ffb4ca.ctex"
+uid="uid://dbr042ilxv70v"
+path="res://.godot/imported/glass_up.png-e28d14c7ca7751788012d37efc18a8fd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/bauble.png"
-dest_files=["res://.godot/imported/bauble.png-47213f4e6c8303e506fd802c24ffb4ca.ctex"]
+source_file="res://assets/sprites/game/glass_up.png"
+dest_files=["res://.godot/imported/glass_up.png-e28d14c7ca7751788012d37efc18a8fd.ctex"]
 
 [params]
 

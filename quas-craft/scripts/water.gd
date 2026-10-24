@@ -17,8 +17,14 @@ func _ready() -> void:
 	angular_damp_space_override = Area2D.SPACE_OVERRIDE_COMBINE
 	angular_damp = water_angular_damp
 	body_entered.connect(_on_body_entered)
+	body_exited.connect(_on_body_exited)
 
 
 func _on_body_entered(body: Node2D) -> void:
 	if _jar != null and body is Ingredient:
 		_jar.absorb(body as Ingredient)
+
+
+func _on_body_exited(body: Node2D) -> void:
+	if _jar != null and body is Ingredient:
+		_jar.unabsorb(body as Ingredient)

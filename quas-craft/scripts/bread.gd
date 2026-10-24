@@ -4,6 +4,8 @@ extends Draggable
 
 signal sliced(slice: Draggable)
 
+## через сколько секунд после предпоследнего разреза остаток режется сам
+@export var auto_cut_delay: float = 0.3
 @export var slice_scene: PackedScene
 ## сколько кусков получится из буханки (каждый разрез отрезает 1/max_cuts длины)
 @export var max_cuts: int = 8
@@ -62,6 +64,11 @@ func cut(blade_velocity: Vector2) -> void:
 	var edge_x := _col.position.x + _shape.size.x * 0.5
 	_spawn_slice(Vector2(edge_x, 0.0) + slice_spawn_offset, blade_velocity)
 
+	# остался один кусок размером с обычный ломтик: режем его сами
+	if cuts_made == max_cuts - 1:
+		cuts_made = max_cuts
+		_auto_cut_last(blade_velocity)
+
 
 ## левый торец остаётся на месте, укорачивается правый (откуда отрезаем).
 func _set_length_ratio(ratio: float) -> void:
@@ -77,11 +84,25 @@ func _spawn_slice(local_pos: Vector2, blade_velocity: Vector2) -> void:
 		push_warning("Bread: не назначена slice_scene")
 		return
 	var slice := slice_scene.instantiate() as Draggable
-	get_parent().add_child(slice)
+	var parent := get_parent()
+	parent.add_child(slice)
+	# рисуем кусок под банкой, как кубики сахара: ставим его в дереве перед банкой
+	var jar := get_tree().get_first_node_in_group("jar_managers")
+	if jar != null and jar.get_parent() == parent:
+		parent.move_child(slice, jar.get_index())
 	slice.global_position = to_global(local_pos)
 	slice.home_position = slice.global_position
-	# кусок выскакивает вправо-вверх. скорость ножа добавляем с ограничением, чтобы не улетал к хуям
+	# кусок выскакивает вправо-вверх. скорость ножа добавляем с ограничением, чтобы не улетал
 	slice.linear_velocity = Vector2(randf_range(60.0, 130.0), randf_range(-220.0, -120.0)) \
 		+ blade_velocity.limit_length(300.0) * 0.15
 	slice.angular_velocity = randf_range(-4.0, 4.0)
 	sliced.emit(slice)
+
+func _auto_cut_last(blade_velocity: Vector2) -> void:
+	consumed = true  # пока ждём, буханку уже нельзя взять
+	release()
+	await get_tree().create_timer(auto_cut_delay).timeout
+	if not is_inside_tree():
+		return
+	_spawn_slice(Vector2(_col.position.x, -30.0), blade_velocity)
+	queue_free()

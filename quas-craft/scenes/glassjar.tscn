@@ -2,13 +2,15 @@
 
 [ext_resource type="Script" uid="uid://dplr26tkbkj1k" path="res://scripts/glassjar.gd" id="1_2agkx"]
 [ext_resource type="Script" uid="uid://v6ltfayjpqqa" path="res://scripts/water.gd" id="1_eg5bp"]
-[ext_resource type="Texture2D" uid="uid://c14aob8yec8jh" path="res://assets/sprites/bauble.png" id="2_82c3e"]
+[ext_resource type="Texture2D" uid="uid://c14aob8yec8jh" path="res://assets/sprites/game/bauble.png" id="2_82c3e"]
+[ext_resource type="Texture2D" uid="uid://c33c0fdih5old" path="res://assets/sprites/game/glass_down.png" id="4_pktgw"]
+[ext_resource type="Texture2D" uid="uid://dbr042ilxv70v" path="res://assets/sprites/game/glass_up.png" id="5_c7dep"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tt1r7"]
-size = Vector2(16, 176)
+size = Vector2(16, 188)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gv56d"]
-size = Vector2(16, 176)
+size = Vector2(16, 188)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cncb8"]
 size = Vector2(192, 16)
@@ -33,11 +35,11 @@ script = ExtResource("1_2agkx")
 [node name="GlassWalls" type="StaticBody2D" parent="." unique_id=749062468]
 
 [node name="LeftWall" type="CollisionShape2D" parent="GlassWalls" unique_id=1494945317]
-position = Vector2(-88, -40)
+position = Vector2(-88, -46)
 shape = SubResource("RectangleShape2D_tt1r7")
 
 [node name="RightWall" type="CollisionShape2D" parent="GlassWalls" unique_id=1495266251]
-position = Vector2(88, -40)
+position = Vector2(88, -46)
 shape = SubResource("RectangleShape2D_gv56d")
 
 [node name="bottom" type="CollisionShape2D" parent="GlassWalls" unique_id=1615149798]
@@ -57,19 +59,29 @@ shape = SubResource("RectangleShape2D_18m3x")
 [node name="back" type="Sprite2D" parent="." unique_id=601537448]
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=126626407]
-mouse_filter = 2
-offset_left = -80.0
+offset_left = -88.0
 offset_top = -96.0
-offset_right = 80.0
-offset_bottom = 48.0
+offset_right = 88.0
+offset_bottom = 56.0
+mouse_filter = 2
 color = Color(0.25490198, 1, 1, 0.3647059)
 
 [node name="front" type="Sprite2D" parent="." unique_id=1236112479]
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=49785043]
-position = Vector2(0, 40)
+position = Vector2(-1, -90)
 emitting = false
 amount = 28
 texture = ExtResource("2_82c3e")
 lifetime = 2.01
 process_material = SubResource("ParticleProcessMaterial_eg5bp")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1189748687]
+position = Vector2(-1.1742115e-05, -37.499996)
+scale = Vector2(0.3086817, 0.42094454)
+texture = ExtResource("4_pktgw")
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1391545867]
+position = Vector2(1, -143.00002)
+scale = Vector2(0.52250004, 0.4827585)
+texture = ExtResource("5_c7dep")
